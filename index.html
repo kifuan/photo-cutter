@@ -6,20 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QQ精选图片切割</title>
     <style>
-        * {
-            font-size: 1rem;
-        }
         .container {
             display: flex;
             flex-direction: column;
-            font-size: 1.5rem;
         }
 
         #canvas-list * {
-            margin-bottom: 1rem;
+            margin-top: 1rem;
         }
+
         body {
             max-width: 1000px;
+            padding-top: 2rem;
             padding-left: 2rem;
             padding-right: 2rem;
         }
@@ -35,7 +33,11 @@
 </head>
 <body>
     <h1>QQ精选图片切割</h1>
-    <p>选中后长按保存下列图片</p>
+    <p>
+        目前仅支持<span style="color: red">宽:高=3:4</span>的图片。<br><br>
+        下载时从上向下依次下载，在QQ中编辑时也从前往后依次选中就没问题。<br><br>
+        请<span style="color: red">不要一次性全部选中</span>，可能会造成乱序。
+    </p>
     <input type="file" id="uploader" accept="image/*" onchange="handleImage()">
     <div id="canvas-list"></div>
     <footer>
