@@ -28,9 +28,20 @@ function readAsImage(file) {
 function createCanvasCtx(label, size) {
     const canvas = document.createElement('canvas')
     const container = document.createElement('div')
+    const download = document.createElement('button')
+    download.innerText = '下载'
+    download.onclick = () => {
+        const a = document.createElement('a')
+        a.download = label
+        a.href = canvas.toDataURL('image/png')
+        a.style.display = 'none'
+        document.body.appendChild(a)
+        a.click()
+    }
     container.classList.add('container')
     container.appendChild(document.createTextNode(label))
     container.appendChild(canvas)
+    container.appendChild(download)
     document.getElementById('canvas-list').appendChild(container)
     canvas.width = size
     canvas.height = size
