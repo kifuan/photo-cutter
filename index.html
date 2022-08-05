@@ -18,9 +18,20 @@
         #canvas-list * {
             margin-bottom: 1rem;
         }
+        body {
+            max-width: 1000px;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
     </style>
 </head>
 <body>
+    <h1>QQ精选图片切割</h1>
+    <p>选中后长按保存下列图片</p>
     <input type="file" id="uploader" accept="image/*" onchange="handleImage()">
     <div id="canvas-list"></div>
     <script src="./script.js"></script>
