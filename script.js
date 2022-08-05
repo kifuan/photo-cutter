@@ -55,6 +55,7 @@ async function handleImage() {
         alert('你选择的文件不是图片')
         return
     }
+    document.getElementById('canvas-list').innerHTML = ''
     const image = await readAsImage(file)
     const u = image.width / 3
     const u2 = u * 2
