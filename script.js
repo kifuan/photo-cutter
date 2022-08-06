@@ -1,5 +1,6 @@
 const strategies = {
     qq3x3: {
+        label: 'QQ个人资料图片3x3',
         unit: 0.333333,
         scale: 0.75,
         steps: [
@@ -51,6 +52,7 @@ const strategies = {
         ]
     },
     normal3x3: {
+        label: '普通3x3(九宫格)',
         unit: 0.333333,
         scale: 1,
         steps: [
@@ -102,6 +104,7 @@ const strategies = {
         ]
     },
     normal2x2: {
+        label: '普通2x2',
         unit: 0.5,
         scale: 1,
         steps: [
@@ -128,6 +131,11 @@ const strategies = {
         ]
     }
 }
+
+// Append all strategies by JS.
+dom('#strategy').append(...Object.entries(strategies).map(([name, strategy]) => {
+    return dom.option({ value: name }, `${strategy.label} 宽高比${strategy.scale.toFixed(2)}`)
+}))
 
 /**
  * Tool object to process DOMs.
