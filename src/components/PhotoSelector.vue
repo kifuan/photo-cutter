@@ -14,10 +14,6 @@ function handleSelect() {
   imageStore.image = undefined
 }
 
-function handleClick() {
-  uploader.value!.click()
-}
-
 function readImage(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve) => {
     const reader = new FileReader()
@@ -58,7 +54,7 @@ async function handleImage() {
     </div>
     <div>
       <label>图片: </label>
-      <button @click="handleClick">
+      <button @click="uploader?.click()">
         选择图片
       </button>
     </div>
