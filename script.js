@@ -145,7 +145,7 @@ const dom = new Proxy(document.querySelector.bind(document), {
  * @param {File} file 
  * @return {Promise<HTMLImageElement>}
  */
-function readAsImage(file) {
+function readFileAsImage(file) {
     return new Promise(resolve => {
         const reader = new FileReader()
         reader.onload = () => {
@@ -178,16 +178,13 @@ function createCanvasCtx(label, size) {
 }
 
 async function handleImage() {
-    const uploader = dom('#uploader')
-    const file = uploader.files[0]
-    if (!/^image\//.test(file.type)) {
-        alert('你选择的文件不是图片')
-        return
-    }
-    dom('#canvas-list').innerHTML = ''
-    const image = await readAsImage(file)
+    // Read the uploaded file.
+    const image = await readFileAsImage(dom('#uploader').files[0])
     const scale = image.width / image.height
     dom('#scale').innerText = scale.toFixed(2)
+
+    // Clear the canvas list.
+    dom('#canvas-list').innerHTML = ''
 
     const strategy = strategies[dom('#strategy').value]
     const unit = image.width * strategy.unit
