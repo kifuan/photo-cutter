@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useStrategyStore, strategies } from '../stores/strategy'
 import { useImageStore } from '../stores/image'
-import { readImage } from '../util'
 import { ref } from 'vue'
 
 const imageStore = useImageStore()
@@ -19,12 +18,23 @@ function handleClick() {
     uploader.value!.click()
 }
 
+function readImage(file: File) : Promise<HTMLImageElement> {
+    return new Promise(resolve => {
+        const reader = new FileReader()
+        reader.onload = () => {
+            const image = new Image()
+            image.src = reader.result as string
+            image.onload = () => resolve(image)
+        }
+        reader.readAsDataURL(file)
+    })
+}
+
 async function handleImage() {
     const files = uploader.value!.files
     if (files === null || files.length !== 1) {
         return
     }
-    console.log('handling image')
     const image = await readImage(files[0])
     scale.value = image.width / image.height
     imageStore.image = image
