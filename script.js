@@ -185,7 +185,7 @@ function createCanvasCtx(label, size) {
         dom.button({
             innerText: '下载', onclick: () => {
                 // Download with a random string to avoid duplicate filenames.
-                dom.a({ download: label + randomStr12(), href: canvas.toDataURL('image/png') }).click()
+                dom.a({ download: randomStr12(), href: canvas.toDataURL('image/png') }).click()
             }
         })
     ))
