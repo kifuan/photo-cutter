@@ -1,3 +1,57 @@
+const strategies = {
+    qqProfile9x9: {
+        unit: 0.333333,
+        steps: [
+            {
+                label: '左1',
+                size: 2,
+                offset: [0, 0]
+            },
+            {
+                label: '右1',
+                size: 1,
+                offset: [2, 0]
+            },
+            {
+                label: '右2',
+                size: 1,
+                offset: [2, 1]
+            },
+            {
+                label: '左2',
+                size: 1,
+                offset: [0, 2]
+            },
+            {
+                label: '中1',
+                size: 1,
+                offset: [1, 2]
+            },
+            {
+                label: '右3',
+                size: 1,
+                offset: [2, 2]
+            },
+            {
+                label: '左3',
+                size: 1,
+                offset: [0, 3]
+            },
+            {
+                label: '中2',
+                size: 1,
+                offset: [1, 3]
+            },
+            {
+                label: '右4',
+                size: 1,
+                offset: [2, 3]
+            }
+        ]
+    },
+    normal9x9: [],
+}
+
 /**
  * Reads the file to an image.
  * @param {File} file 
@@ -10,8 +64,6 @@ function readAsImage(file) {
             const image = new Image()
             image.src = reader.result
             image.onload = () => {
-                // Keep height:width = 4:3
-                image.height = image.width * 4 / 3
                 resolve(image)
             }
         }
@@ -57,33 +109,12 @@ async function handleImage() {
     }
     document.getElementById('canvas-list').innerHTML = ''
     const image = await readAsImage(file)
-    const u = image.width / 3
-    const u2 = u * 2
-    const u3 = u * 3
-    const left1 = createCanvasCtx('左1', u2)
-    left1.drawImage(image, 0, 0, u2, u2, 0, 0, u2, u2)
-
-    const right1 = createCanvasCtx('右1', u)
-    right1.drawImage(image, u2, 0, u, u, 0, 0, u, u)
-
-    const right2 = createCanvasCtx('右2', u)
-    right2.drawImage(image, u2, u, u, u, 0, 0, u, u)
-
-    const left2 = createCanvasCtx('左2', u)
-    left2.drawImage(image, 0, u2, u, u, 0, 0, u, u)
-
-    const middle1 = createCanvasCtx('中1', u)
-    middle1.drawImage(image, u, u2, u, u, 0, 0, u, u)
-
-    const right3 = createCanvasCtx('右3', u)
-    right3.drawImage(image, u2, u2, u, u, 0, 0, u, u)
-
-    const left3 = createCanvasCtx('左3', u)
-    left3.drawImage(image, 0, u3, u, u, 0, 0, u, u)
-
-    const middle2 = createCanvasCtx('中2', u)
-    middle2.drawImage(image, u, u3, u, u, 0, 0, u, u)
-
-    const right4 = createCanvasCtx('右4', u)
-    right4.drawImage(image, u2, u3, u, u, 0, 0, u, u)
+    const strategy = strategies['qqProfile9x9']
+    const unit = image.width * strategy.unit
+    for (const step of strategy.steps) {
+        const { label, size } = step
+        const [ offsetX, offsetY ] = step.offset
+        const ctx = createCanvasCtx(label, unit * size)
+        ctx.drawImage(image, unit * offsetX, unit * offsetY, unit * size, unit * size, 0, 0, unit * size, unit * size)
+    }
 }
