@@ -132,11 +132,6 @@ const strategies = {
     }
 }
 
-// Append all strategies by JS.
-dom('#strategy').append(...Object.entries(strategies).map(([name, strategy]) => {
-    return dom.option({ value: name }, `${strategy.label} 宽高比${strategy.scale.toFixed(2)}`)
-}))
-
 /**
  * Tool object to process DOMs.
  */
@@ -150,6 +145,11 @@ const dom = new Proxy(document.querySelector.bind(document), {
         }
     }
 })
+
+// Append all strategies by JS.
+dom('#strategy').append(...Object.entries(strategies).map(([name, strategy]) => {
+    return dom.option({ value: name }, `${strategy.label} 宽高比${strategy.scale.toFixed(2)}`)
+}))
 
 /**
  * Reads the file to an image.
