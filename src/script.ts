@@ -1,3 +1,5 @@
+import { onMounted } from "vue"
+
 interface StrategyStep {
     label: string
     size: number
@@ -11,7 +13,7 @@ interface Strategy {
     steps: StrategyStep[]
 }
 
-const strategies: Record<string, Strategy> = {
+export const strategies: Record<string, Strategy> = {
     qq3x3: {
         label: 'QQ个人资料图片3x3',
         unit: 0.333333,
@@ -152,7 +154,7 @@ type DOMTool = typeof document.querySelector & {
 /**
  * Tool object to process DOMs.
  */
-const dom = new Proxy(document.querySelector.bind(document), {
+export const dom = new Proxy(document.querySelector.bind(document), {
     get(_, key: string) {
         return (attrs: {}, ...nodes: (Node | string)[]) => {
             const el = document.createElement(key)
@@ -163,10 +165,7 @@ const dom = new Proxy(document.querySelector.bind(document), {
     }
 }) as DOMTool
 
-// Append all strategies by JS.
-dom('#strategy')!.append(...Object.entries(strategies).map(([name, strategy]) => {
-    return dom.option({ value: name }, `${strategy.label} 宽高比${strategy.scale.toFixed(2)}`)
-}))
+
 
 function readFileAsImage(file: File) : Promise<HTMLImageElement> {
     return new Promise(resolve => {
@@ -215,7 +214,7 @@ function createCanvasCtx(label: string, size: number) : CanvasRenderingContext2D
     return canvas.getContext('2d')!
 }
 
-async function handleImage() {
+export async function handleImage() {
     // Read the uploaded file.
     const image = await readFileAsImage(dom<HTMLInputElement>('#uploader')!.files![0])
     const scale = image.width / image.height
@@ -242,8 +241,3 @@ async function handleImage() {
     }
 }
 
-function handleSelect() {
-    dom('#canvas-list')!.innerHTML = '暂未数据'
-    dom<HTMLInputElement>('#uploader')!.value = ''
-    dom<HTMLSpanElement>('#scale')!.innerText = ''
-}

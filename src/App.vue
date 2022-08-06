@@ -1,0 +1,87 @@
+<script lang="ts" setup>
+import { onMounted } from 'vue'
+import { dom, handleImage, strategies } from './script'
+
+// Append all strategies by JS.
+onMounted(() => {
+    console.log('strategy')
+    dom('#strategy')!.append(...Object.entries(strategies).map(([name, strategy]) => {
+        return dom.option({ value: name }, `${strategy.label} 宽高比${strategy.scale.toFixed(2)}`)
+    }))
+})
+
+function handleSelect() {
+    dom('#canvas-list')!.innerHTML = '暂未数据'
+    dom<HTMLInputElement>('#uploader')!.value = ''
+    dom<HTMLSpanElement>('#scale')!.innerText = ''
+}
+</script>
+
+<template>
+    <h1>图片切割器 v1.12</h1>
+    <p>
+        下载时从上向下依次下载，在QQ或其它App中编辑时也从前往后依次选中就没问题。
+    </p>
+    <p>
+        实际宽高比可以与理想宽高比不同，我会把边缘部分裁掉，留下中间的部分。
+    </p>
+    <p>
+        请<span style="color: red">不要在QQ或其它App中一次性全部选中</span>，可能会造成乱序。
+    </p>
+
+    <h1>参数选择</h1>
+    <div class="container">
+        <div>
+            <label for="strategy">模式:</label>
+            <select id="strategy" @change="handleSelect">
+            </select>
+        </div>
+        <div>
+            <label for="uploader-btn">图片:</label>
+            <button id="uploader-btn" onclick="document.getElementById('uploader').click()">选择图片</button>
+        </div>
+        <div>
+            <label for="scale">实际宽高比:</label>
+            <span id="scale" style="color: red"></span>
+        </div>
+    </div>
+
+    <h1>处理结果</h1>
+    <div id="canvas-list">
+        暂未数据
+    </div>
+    <footer>
+        <a href="https://github.com/kifuan/photo-cutter" target="_blank">Github仓库</a>
+    </footer>
+    <!-- Make no effects on this hidden element -->
+    <input style="display: none" type="file" id="uploader" accept="image/*" @change="handleImage">
+</template>
+
+<style>
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.container * {
+    margin-bottom: 15px;
+}
+
+#canvas-list > * {
+    display: flex;
+    flex-direction: column;
+}
+
+#canvas-list > * > * {
+    margin-bottom: 15px;
+}
+
+body {
+    max-width: 1000px;
+    padding: 20px;
+}
+
+footer {
+    padding-top: 50px;
+}
+</style>
