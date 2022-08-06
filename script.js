@@ -179,7 +179,7 @@ function randomStr12() {
  */
 function createCanvasCtx(label, size) {
     const canvas = dom.canvas({ width: size, height: size })
-    dom('#canvas-list').appendChild(dom.div({ className: 'canvas-container' },
+    dom('#canvas-list').appendChild(dom.div({},
         dom.p({}, label),
         canvas,
         dom.button({

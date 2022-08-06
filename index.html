@@ -6,12 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>图片切割器</title>
     <style>
-        .canvas-container, .container {
+        .container {
             display: flex;
             flex-direction: column;
         }
 
-        #canvas-list *, .container * {
+        .container * {
+            margin-bottom: 15px;
+        }
+
+        #canvas-list > * {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #canvas-list > * > * {
             margin-bottom: 15px;
         }
 
@@ -28,7 +37,7 @@
     </style>
 </head>
 <body>
-    <h1>图片切割器 v1.8</h1>
+    <h1>图片切割器 v1.10</h1>
     <p>
         我不会改变图片的宽度, 但是会根据比例<span style="color: red">截断图片的高度</span>。
     </p>
@@ -71,6 +80,6 @@
     </footer>
     <!-- Make no effects on this hidden element -->
     <input style="display: none" type="file" id="uploader" accept="image/*" onchange="handleImage()">
-    <script src="./script.js?v=1.8"></script>
+    <script src="./script.js?v=1.10"></script>
 </body>
 </html>
