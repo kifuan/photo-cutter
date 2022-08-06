@@ -197,6 +197,6 @@ async function handleImage() {
 }
 
 function handleSelect() {
-    document.getElementById('canvas-list').innerHTML = ''
+    document.getElementById('canvas-list').innerHTML = '暂未数据'
     document.getElementById('uploader').value = ''
 }
