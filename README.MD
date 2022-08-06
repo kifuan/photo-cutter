@@ -1,8 +1,10 @@
 # 图片切割器
 
-## Intro
-
 可以把一张大图切成几个小图。
+
+## Introduction
+
+以前是用原生JS写的，不过逻辑越加越混乱，索性用`Github Actions`来帮我部署`Vue`项目了。
 
 ## Features
 
