@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { storeToRefs } from 'pinia'
-import { computed, onMounted, onUpdated, watch } from 'vue'
+import { computed, watch } from 'vue'
 import { useImageStore } from '../stores/image'
 import { useStrategyStore, strategies } from '../stores/strategy'
 
@@ -34,22 +34,32 @@ watch(storeToRefs(imageStore).image, image => {
         ctx.drawImage(image, unit * offsetX + cutOffsetX, unit * offsetY + cutOffsetY, unit * size, unit * size, 0, 0, unit * size, unit * size)
     }
 })
+
+function handleDownload(canvasIndex: number) {
+    const a = document.createElement('a')
+    a.download = Math.random().toString(36).substring(2)
+    a.href = canvases[canvasIndex].toDataURL()
+    a.click()
+}
 </script>
 
 <template>
-    <div>
-        <template v-for="(step, index) in strategy.steps">
-            <p>{{step.label}}</p>
-            <canvas
-                :ref="el => canvases[index] = el as HTMLCanvasElement"
-            />
-        </template>
+    <div class="fragment" v-for="(step, index) in strategy.steps" :key="index">
+        <p>{{step.label}}</p>
+        <canvas
+            :ref="el => canvases[index] = el as HTMLCanvasElement"
+        />
+        <button @click="handleDownload(index)">下载</button>
     </div>
 </template>
 
 <style scoped>
-div {
+.fragment {
     display: flex;
     flex-direction: column;
+}
+
+.fragment > * {
+    margin-bottom: 15px;
 }
 </style>

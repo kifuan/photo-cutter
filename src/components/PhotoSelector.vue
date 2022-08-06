@@ -52,7 +52,7 @@ async function handleImage() {
                     :key="name"
                     :value="name"
                 >
-                    {{strategy.label}}
+                    {{strategy.label}} 宽高比{{strategy.scale.toFixed(2)}}
                 </option>
             </select>
         </div>
