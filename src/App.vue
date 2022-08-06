@@ -5,12 +5,12 @@ import ProcessResult from './components/ProcessResult.vue'
 </script>
 
 <template>
-    <intro-header/>
-    <photo-selector/>
-    <process-result/>
-    <footer>
-        <a href="https://github.com/kifuan/photo-cutter" target="_blank">Github仓库</a>
-    </footer>
+  <IntroHeader />
+  <PhotoSelector />
+  <ProcessResult />
+  <footer>
+    <a href="https://github.com/kifuan/photo-cutter" target="_blank">Github仓库</a>
+  </footer>
 </template>
 
 <style>

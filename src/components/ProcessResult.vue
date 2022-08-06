@@ -7,13 +7,13 @@ const imageStore = useImageStore()
 </script>
 
 <template>
-    <h1>处理结果</h1>
-    <div v-show="imageStore.image === undefined">
-        暂无数据
-    </div>
-    <div v-show="imageStore.image !== undefined">
-        <photo-fragments/>
-    </div>
+  <h1>处理结果</h1>
+  <div v-show="imageStore.image === undefined">
+    暂无数据
+  </div>
+  <div v-show="imageStore.image !== undefined">
+    <PhotoFragments />
+  </div>
 </template>
 
 <style scoped>
