@@ -99,6 +99,31 @@ const strategies = {
             }
         ]
     },
+    normal2x2: {
+        unit: 0.5,
+        steps: [
+            {
+                label: '左1',
+                size: 1,
+                offset: [0, 0]
+            },
+            {
+                label: '右1',
+                size: 1,
+                offset: [1, 0]
+            },
+            {
+                label: '左2',
+                size: 1,
+                offset: [0, 1]
+            },
+            {
+                label: '右2',
+                size: 1,
+                offset: [1, 1]
+            }
+        ]
+    }
 }
 
 /**
