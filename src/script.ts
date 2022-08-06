@@ -152,7 +152,7 @@ type DOMTool = typeof document.querySelector & {
 /**
  * Tool object to process DOMs.
  */
-const dom: DOMTool = new Proxy(document.querySelector.bind(document), {
+const dom = new Proxy(document.querySelector.bind(document), {
     get(_, key: string) {
         return (attrs: {}, ...nodes: (Node | string)[]) => {
             const el = document.createElement(key)
@@ -161,7 +161,7 @@ const dom: DOMTool = new Proxy(document.querySelector.bind(document), {
             return el
         }
     }
-})
+}) as DOMTool
 
 // Append all strategies by JS.
 dom('#strategy')!.append(...Object.entries(strategies).map(([name, strategy]) => {
