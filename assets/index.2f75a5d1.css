@@ -1,0 +1,1 @@
+.container{display:flex;flex-direction:column}.container *{margin-bottom:15px}#canvas-list>*{display:flex;flex-direction:column}#canvas-list>*>*{margin-bottom:15px}body{max-width:1000px;padding:20px}footer{padding-top:50px}
