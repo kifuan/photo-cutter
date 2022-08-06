@@ -1,6 +1,7 @@
 const strategies = {
     qq3x3: {
         unit: 0.333333,
+        scale: 0.75,
         steps: [
             {
                 label: '左1',
@@ -51,6 +52,7 @@ const strategies = {
     },
     normal3x3: {
         unit: 0.333333,
+        scale: 1,
         steps: [
             {
                 label: '左1',
@@ -101,6 +103,7 @@ const strategies = {
     },
     normal2x2: {
         unit: 0.5,
+        scale: 1,
         steps: [
             {
                 label: '左1',
@@ -202,10 +205,20 @@ async function handleImage() {
     dom('#canvas-list').innerHTML = ''
 
     const strategy = strategies[dom('#strategy').value]
-    const unit = image.width * strategy.unit
+    // Cut the edges of the image off.
+    let unit, cutOffsetX = 0, cutOffsetY = 0
+    if (scale > strategy.scale) {
+        const idealWidth = image.height * strategy.scale
+        unit = idealWidth * strategy.unit
+        cutOffsetX = (image.width - idealWidth) / 2
+    } else {
+        const idealHeight = image.width / strategy.scale
+        unit = image.width * strategy.unit
+        cutOffsetY = (image.height - idealHeight) / 2
+    }
     for (const { label, size, offset: [offsetX, offsetY] } of strategy.steps) {
         const ctx = createCanvasCtx(label, unit * size)
-        ctx.drawImage(image, unit * offsetX, unit * offsetY, unit * size, unit * size, 0, 0, unit * size, unit * size)
+        ctx.drawImage(image, unit * offsetX + cutOffsetX, unit * offsetY + cutOffsetY, unit * size, unit * size, 0, 0, unit * size, unit * size)
     }
 }
 
