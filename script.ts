@@ -1,4 +1,17 @@
-const strategies = {
+interface StrategyStep {
+    label: string
+    size: number
+    offset: [number, number]
+}
+
+interface Strategy {
+    label: string
+    unit: number
+    scale: number
+    steps: StrategyStep[]
+}
+
+const strategies: Record<string, Strategy> = {
     qq3x3: {
         label: 'QQ个人资料图片3x3',
         unit: 0.333333,
@@ -132,12 +145,16 @@ const strategies = {
     }
 }
 
+type DOMTool = typeof document.querySelector & {
+    [tagName: string] : <T extends HTMLElement = HTMLElement>(attrs: {}, ...nodes: (Node | string)[]) => T
+}
+
 /**
  * Tool object to process DOMs.
  */
-const dom = new Proxy(document.querySelector.bind(document), {
-    get(_, key) {
-        return (attrs, ...nodes) => {
+const dom: DOMTool = new Proxy(document.querySelector.bind(document), {
+    get(_, key: string) {
+        return (attrs: {}, ...nodes: (Node | string)[]) => {
             const el = document.createElement(key)
             Object.assign(el, attrs)
             el.append(...nodes)
@@ -147,21 +164,16 @@ const dom = new Proxy(document.querySelector.bind(document), {
 })
 
 // Append all strategies by JS.
-dom('#strategy').append(...Object.entries(strategies).map(([name, strategy]) => {
+dom('#strategy')!.append(...Object.entries(strategies).map(([name, strategy]) => {
     return dom.option({ value: name }, `${strategy.label} 宽高比${strategy.scale.toFixed(2)}`)
 }))
 
-/**
- * Reads the file to an image.
- * @param {File} file 
- * @return {Promise<HTMLImageElement>}
- */
-function readFileAsImage(file) {
+function readFileAsImage(file: File) : Promise<HTMLImageElement> {
     return new Promise(resolve => {
         const reader = new FileReader()
         reader.onload = () => {
             const image = new Image()
-            image.src = reader.result
+            image.src = reader.result as string
             image.onload = () => {
                 resolve(image)
             }
@@ -171,12 +183,11 @@ function readFileAsImage(file) {
 }
 
 /**
- * Generate a random string with letters.
- * @return {string} a random string with letters.
+ * Generate a random string sized 12.
  */
-function randomStr12() {
+function randomStr12() : string {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-    return Array(12).fill().reduce(result => {
+    return Array(12).fill(undefined).reduce(result => {
         const randomChar = chars.charAt(Math.floor(Math.random() * chars.length))
         return result + randomChar
     }, '')
@@ -184,13 +195,14 @@ function randomStr12() {
 
 /**
  * Creates a context and append it to the container.
- * @param {string} label the label for the canvas.
- * @param {number} size the size for width and height.
- * @return {CanvasRenderingContext2D} the context.
+ * @param label the label for the canvas.
+ * @param size the size for width and height.
+ * @return the context.
+ * 
  */
-function createCanvasCtx(label, size) {
-    const canvas = dom.canvas({ width: size, height: size })
-    dom('#canvas-list').appendChild(dom.div({},
+function createCanvasCtx(label: string, size: number) : CanvasRenderingContext2D {
+    const canvas = dom.canvas<HTMLCanvasElement>({ width: size, height: size })
+    dom('#canvas-list')!.appendChild(dom.div({},
         dom.p({}, label),
         canvas,
         dom.button({
@@ -200,21 +212,21 @@ function createCanvasCtx(label, size) {
             }
         })
     ))
-    return canvas.getContext('2d')
+    return canvas.getContext('2d')!
 }
 
 async function handleImage() {
     // Read the uploaded file.
-    const image = await readFileAsImage(dom('#uploader').files[0])
+    const image = await readFileAsImage(dom<HTMLInputElement>('#uploader')!.files![0])
     const scale = image.width / image.height
-    dom('#scale').innerText = scale.toFixed(2)
+    dom<HTMLSpanElement>('#scale')!.innerText = scale.toFixed(2)
 
     // Clear the canvas list.
-    dom('#canvas-list').innerHTML = ''
+    dom<HTMLDivElement>('#canvas-list')!.innerHTML = ''
 
-    const strategy = strategies[dom('#strategy').value]
+    const strategy = strategies[dom<HTMLSelectElement>('#strategy')!.value]
     // Cut the edges of the image off.
-    let unit, cutOffsetX = 0, cutOffsetY = 0
+    let unit: number, cutOffsetX = 0, cutOffsetY = 0
     if (scale > strategy.scale) {
         const idealWidth = image.height * strategy.scale
         unit = idealWidth * strategy.unit
@@ -231,7 +243,7 @@ async function handleImage() {
 }
 
 function handleSelect() {
-    dom('#canvas-list').innerHTML = '暂未数据'
-    dom('#uploader').value = ''
-    dom('#scale').innerText = ''
+    dom('#canvas-list')!.innerHTML = '暂未数据'
+    dom<HTMLInputElement>('#uploader')!.value = ''
+    dom<HTMLSpanElement>('#scale')!.innerText = ''
 }
