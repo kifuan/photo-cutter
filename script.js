@@ -160,6 +160,18 @@ function readFileAsImage(file) {
 }
 
 /**
+ * Generate a random string with letters.
+ * @return {string} a random string with letters.
+ */
+function randomStr12() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+    return Array(12).reduce(result => {
+        const randomChar = chars.charAt(Math.floor(Math.random() * chars.length))
+        return result + randomChar
+    }, '')
+}
+
+/**
  * Creates a context and append it to the container.
  * @param {string} label the label for the canvas.
  * @param {number} size the size for width and height.
@@ -167,12 +179,15 @@ function readFileAsImage(file) {
  */
 function createCanvasCtx(label, size) {
     const canvas = dom.canvas({ width: size, height: size })
-    dom('#canvas-list').appendChild(dom.div({ className: 'canvas-container' }, 
+    dom('#canvas-list').appendChild(dom.div({ className: 'canvas-container' },
         dom.p({}, label),
         canvas,
-        dom.button({ innerText: '下载', onclick: () => {
-            dom.a({ download: label, href: canvas.toDataURL('image/png') }).click()
-        }})
+        dom.button({
+            innerText: '下载', onclick: () => {
+                // Download with a random string to avoid duplicate filenames.
+                dom.a({ download: label + randomStr12(), href: canvas.toDataURL('image/png') }).click()
+            }
+        })
     ))
     return canvas.getContext('2d')
 }
@@ -188,7 +203,7 @@ async function handleImage() {
 
     const strategy = strategies[dom('#strategy').value]
     const unit = image.width * strategy.unit
-    for (const { label, size, offset: [ offsetX, offsetY ] } of strategy.steps) {
+    for (const { label, size, offset: [offsetX, offsetY] } of strategy.steps) {
         const ctx = createCanvasCtx(label, unit * size)
         ctx.drawImage(image, unit * offsetX, unit * offsetY, unit * size, unit * size, 0, 0, unit * size, unit * size)
     }
