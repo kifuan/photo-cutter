@@ -6,37 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>图片切割器</title>
     <style>
-        .canvas-container, .buttons {
+        .canvas-container, .container {
             display: flex;
             flex-direction: column;
         }
 
-        .buttons * {
-            margin-top: 1rem;
-        }
-
-        #canvas-list * {
-            margin-top: 1rem;
+        #canvas-list *, .container * {
+            margin-top: 15px;
         }
 
         body {
             max-width: 1000px;
-            padding-top: 2rem;
-            padding-left: 2rem;
-            padding-right: 2rem;
-        }
-
-        h1 {
-            font-size: 2rem;
+            padding-top: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
         }
 
         footer {
-            padding-top: 5rem;
+            padding-top: 50px;
         }
     </style>
 </head>
 <body>
-    <h1>图片切割器 v1.1</h1>
+    <h1>图片切割器 v1.2</h1>
     <p>
         我不会改变图片的宽度, 但是会根据比例<span style="color: red">截断图片的高度</span>。
     </p>
@@ -47,19 +39,30 @@
         请<span style="color: red">不要在QQ或其它App中一次性全部选中</span>，可能会造成乱序。
     </p>
 
-    <div class="buttons">
-        <select id="strategy" onchange="handleSelect()">
-            <option value="qq3x3">QQ个人资料图片3x3 宽高比3:4</option>
-            <option value="normal3x3">普通3x3 宽高比1:1</option>
-            <option value="normal2x2">普通2x2 宽高比1:1</option>
-        </select>
-        <button onclick="document.getElementById('uploader').click()">选择图片</button>
-        <input style="display: none" type="file" id="uploader" accept="image/*" onchange="handleImage()">
+    <div class="container">
+        <div>
+            <label for="strategy">模式:</label>
+            <select id="strategy" onchange="handleSelect()">
+                <option value="qq3x3">QQ个人资料图片3x3 宽高比0.75</option>
+                <option value="normal3x3">普通3x3 宽高比1.00</option>
+                <option value="normal2x2">普通2x2 宽高比1.00</option>
+            </select>
+        </div>
+        <div>
+            <label for="uploader-btn">图片:</label>
+            <button id="uploader-btn" onclick="document.getElementById('uploader').click()">选择图片</button>
+        </div>
+        <div>
+            <label for="scale">宽高比:</label>
+            <span id="scale" style="color: red"></span>
+        </div>
     </div>
     <div id="canvas-list"></div>
     <footer>
         <a href="https://github.com/kifuan/qq-photo-cutter" target="_blank">Github仓库</a>
     </footer>
-    <script src="./script.js?v=1.1"></script>
+    <!-- Make no effects on this hidden element -->
+    <input style="display: none" type="file" id="uploader" accept="image/*" onchange="handleImage()">
+    <script src="./script.js?v=1.2"></script>
 </body>
 </html>
