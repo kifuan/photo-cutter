@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue'
 import IntroHeader from './components/IntroHeader.vue'
 import PhotoSelector from './components/PhotoSelector.vue'
 import ProcessResult from './components/ProcessResult.vue'
-import { dom } from './script'
 </script>
 
 <template>
@@ -16,17 +14,7 @@ import { dom } from './script'
 </template>
 
 <style>
-.container {
-    display: flex;
-    flex-direction: column;
-}
-
-.container * {
-    margin-bottom: 15px;
-}
-
 body {
-    max-width: 1000px;
     padding: 20px;
 }
 
