@@ -1,5 +1,5 @@
 const strategies = {
-    qqProfile9x9: {
+    qq3x3: {
         unit: 0.333333,
         steps: [
             {
@@ -49,7 +49,56 @@ const strategies = {
             }
         ]
     },
-    normal9x9: [],
+    normal3x3: {
+        unit: 0.333333,
+        steps: [
+            {
+                label: '左1',
+                size: 1,
+                offset: [0, 0]
+            },
+            {
+                label: '中1',
+                size: 1,
+                offset: [1, 0]
+            },
+            {
+                label: '右1',
+                size: 1,
+                offset: [2, 0]
+            },
+            {
+                label: '左2',
+                size: 1,
+                offset: [0, 1]
+            },
+            {
+                label: '中2',
+                size: 1,
+                offset: [1, 1]
+            },
+            {
+                label: '右2',
+                size: 1,
+                offset: [2, 1]
+            },
+            {
+                label: '左3',
+                size: 1,
+                offset: [0, 2]
+            },
+            {
+                label: '中3',
+                size: 1,
+                offset: [1, 2]
+            },
+            {
+                label: '右3',
+                size: 1,
+                offset: [2, 2]
+            }
+        ]
+    },
 }
 
 /**
@@ -90,7 +139,7 @@ function createCanvasCtx(label, size) {
         document.body.appendChild(a)
         a.click()
     }
-    container.classList.add('container')
+    container.className = 'canvas-container'
     container.appendChild(document.createTextNode(label))
     container.appendChild(canvas)
     container.appendChild(download)
@@ -109,7 +158,8 @@ async function handleImage() {
     }
     document.getElementById('canvas-list').innerHTML = ''
     const image = await readAsImage(file)
-    const strategy = strategies['qqProfile9x9']
+    console.log(document.getElementById('strategy').value)
+    const strategy = strategies[document.getElementById('strategy').value]
     const unit = image.width * strategy.unit
     for (const step of strategy.steps) {
         const { label, size } = step
@@ -117,4 +167,9 @@ async function handleImage() {
         const ctx = createCanvasCtx(label, unit * size)
         ctx.drawImage(image, unit * offsetX, unit * offsetY, unit * size, unit * size, 0, 0, unit * size, unit * size)
     }
+}
+
+function handleSelect() {
+    document.getElementById('canvas-list').innerHTML = ''
+    document.getElementById('uploader').value = ''
 }

@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QQ精选图片切割</title>
+    <title>图片切割器</title>
     <style>
-        .container {
+        .canvas-container {
             display: flex;
             flex-direction: column;
+        }
+
+        .container * {
+            margin-top: 1rem;
         }
 
         #canvas-list * {
@@ -32,17 +36,21 @@
     </style>
 </head>
 <body>
-    <h1>QQ精选图片切割</h1>
+    <h1>图片切割器</h1>
     <p>
-        目前仅支持<span style="color: red">宽高比近似于3:4</span>的图片。
+        下载时从上向下依次下载，在QQ或其它App中编辑时也从前往后依次选中就没问题。
     </p>
     <p>
-        下载时从上向下依次下载，在QQ中编辑时也从前往后依次选中就没问题。
+        请<span style="color: red">不要在QQ或其它App中一次性全部选中</span>，可能会造成乱序。
     </p>
-    <p>
-        请<span style="color: red">不要在QQ中一次性全部选中</span>，可能会造成乱序。
-    </p>
-    <input type="file" id="uploader" accept="image/*" onchange="handleImage()">
+
+    <div class="container">
+        <select id="strategy" onchange="handleSelect()">
+            <option value="qq3x3">QQ个人资料图片3x3</option>
+            <option value="normal3x3">普通3x3</option>
+        </select>
+        <input type="file" id="uploader" accept="image/*" onchange="handleImage()">
+    </div>
     <div id="canvas-list"></div>
     <footer>
         <a href="https://github.com/kifuan/qq-photo-cutter" target="_blank">Github仓库</a>
