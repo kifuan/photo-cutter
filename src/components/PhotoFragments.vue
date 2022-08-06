@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { computed, watch } from 'vue'
 import { useImageStore } from '../stores/image'
-import { strategies, useStrategyStore } from '../stores/strategy'
+import { strategies, Strategy, useStrategyStore } from '../stores/strategy'
 
 const imageStore = useImageStore()
 const strategyStore = useStrategyStore()
@@ -11,22 +11,29 @@ const strategy = computed(() => {
 })
 const canvases = [] as HTMLCanvasElement[]
 
+function calcRegularData(image: HTMLImageElement, strategy: Strategy) : { unit: number, cutOffset: [ number, number ] } {
+  const scale = image.width / image.height
+  if (scale > strategy.scale) {
+    // The width is more than expected, use height * scale to calculate ideal width.
+    const idealWidth = image.height * strategy.scale
+    const unit = idealWidth * strategy.unit
+    const cutOffsetX = (image.width - idealWidth) / 2
+    return { unit, cutOffset: [ cutOffsetX, 0 ] }
+  }
+  else {
+    // The height is more than expected, use width / scale to calculate ideal height.
+    const idealHeight = image.width / strategy.scale
+    const unit = image.width * strategy.unit
+    const cutOffsetY = (image.height - idealHeight) / 2
+    return { unit, cutOffset: [ 0, cutOffsetY ] }
+  }
+}
+
 watch(storeToRefs(imageStore).image, (image) => {
   if (image === undefined)
     return
 
-  let unit: number; let cutOffsetX = 0; let cutOffsetY = 0
-  const scale = image.width / image.height
-  if (scale > strategy.value.scale) {
-    const idealWidth = image.height * strategy.value.scale
-    unit = idealWidth * strategy.value.unit
-    cutOffsetX = (image.width - idealWidth) / 2
-  }
-  else {
-    const idealHeight = image.width / strategy.value.scale
-    unit = image.width * strategy.value.unit
-    cutOffsetY = (image.height - idealHeight) / 2
-  }
+  const { unit, cutOffset: [ cutOffsetX, cutOffsetY ] } = calcRegularData(image, strategy.value)
   for (let i = 0; i < canvases.length; i++) {
     const { size, offset: [offsetX, offsetY] } = strategy.value.steps[i]
     const canvas = canvases[i]
