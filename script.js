@@ -185,8 +185,7 @@ async function handleImage() {
     const image = await readAsImage(file)
     const scale = image.width / image.height
     document.getElementById('scale').innerText = scale.toFixed(2)
-    
-    console.log(document.getElementById('strategy').value)
+
     const strategy = strategies[document.getElementById('strategy').value]
     const unit = image.width * strategy.unit
     for (const step of strategy.steps) {
