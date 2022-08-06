@@ -188,9 +188,7 @@ async function handleImage() {
 
     const strategy = strategies[dom('#strategy').value]
     const unit = image.width * strategy.unit
-    for (const step of strategy.steps) {
-        const { label, size } = step
-        const [ offsetX, offsetY ] = step.offset
+    for (const { label, size, offset: [ offsetX, offsetY ] } of strategy.steps) {
         const ctx = createCanvasCtx(label, unit * size)
         ctx.drawImage(image, unit * offsetX, unit * offsetY, unit * size, unit * size, 0, 0, unit * size, unit * size)
     }
