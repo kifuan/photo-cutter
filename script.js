@@ -165,7 +165,7 @@ function readFileAsImage(file) {
  */
 function randomStr12() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-    return Array(12).reduce(result => {
+    return Array(12).fill().reduce(result => {
         const randomChar = chars.charAt(Math.floor(Math.random() * chars.length))
         return result + randomChar
     }, '')
