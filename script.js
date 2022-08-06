@@ -199,4 +199,5 @@ async function handleImage() {
 function handleSelect() {
     document.getElementById('canvas-list').innerHTML = '暂未数据'
     document.getElementById('uploader').value = ''
+    document.getElementById('scale').innerText = ''
 }
