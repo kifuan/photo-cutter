@@ -127,6 +127,20 @@ const strategies = {
 }
 
 /**
+ * Tool object to process DOMs.
+ */
+const dom = new Proxy(document.querySelector.bind(document), {
+    get(_, key) {
+        return (attrs, ...nodes) => {
+            const el = document.createElement(key)
+            Object.assign(el, attrs)
+            el.append(...nodes)
+            return el
+        }
+    }
+})
+
+/**
  * Reads the file to an image.
  * @param {File} file 
  * @return {Promise<HTMLImageElement>}
@@ -152,41 +166,30 @@ function readAsImage(file) {
  * @return {CanvasRenderingContext2D} the context.
  */
 function createCanvasCtx(label, size) {
-    const canvas = document.createElement('canvas')
-    const container = document.createElement('div')
-    const download = document.createElement('button')
-    download.innerText = '下载'
-    download.onclick = () => {
-        const a = document.createElement('a')
-        a.download = label
-        a.href = canvas.toDataURL('image/png')
-        a.style.display = 'none'
-        document.body.appendChild(a)
-        a.click()
-    }
-    container.className = 'canvas-container'
-    container.appendChild(document.createTextNode(label))
-    container.appendChild(canvas)
-    container.appendChild(download)
-    document.getElementById('canvas-list').appendChild(container)
-    canvas.width = size
-    canvas.height = size
+    const canvas = dom.canvas({ width: size, height: size })
+    dom('#canvas-list').appendChild(dom.div({ className: 'canvas-container' }, 
+        dom.p({}, label),
+        canvas,
+        dom.button({ innerText: '下载', onclick: () => {
+            dom.a({ download: label, href: canvas.toDataURL('image/png') }).click()
+        }})
+    ))
     return canvas.getContext('2d')
 }
 
 async function handleImage() {
-    const uploader = document.getElementById('uploader')
+    const uploader = dom('#uploader')
     const file = uploader.files[0]
     if (!/^image\//.test(file.type)) {
         alert('你选择的文件不是图片')
         return
     }
-    document.getElementById('canvas-list').innerHTML = ''
+    dom('#canvas-list').innerHTML = ''
     const image = await readAsImage(file)
     const scale = image.width / image.height
-    document.getElementById('scale').innerText = scale.toFixed(2)
+    dom('#scale').innerText = scale.toFixed(2)
 
-    const strategy = strategies[document.getElementById('strategy').value]
+    const strategy = strategies[dom('#strategy').value]
     const unit = image.width * strategy.unit
     for (const step of strategy.steps) {
         const { label, size } = step
@@ -197,7 +200,7 @@ async function handleImage() {
 }
 
 function handleSelect() {
-    document.getElementById('canvas-list').innerHTML = '暂未数据'
-    document.getElementById('uploader').value = ''
-    document.getElementById('scale').innerText = ''
+    dom('#canvas-list').innerHTML = '暂未数据'
+    dom('#uploader').value = ''
+    dom('#scale').innerText = ''
 }
