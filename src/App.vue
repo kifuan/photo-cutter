@@ -8,20 +8,18 @@ const result = ref()
 </script>
 
 <template>
-  <IntroHeader />
-  <PhotoSelector @select="result?.setImage" @clear="result?.clearImage" />
-  <PhotoResult ref="result" />
-  <footer>
-    <a href="https://github.com/kifuan/photo-cutter" target="_blank">Github仓库</a>
-  </footer>
+  <div class="space-y-8">
+    <IntroHeader />
+    <PhotoSelector @select="result?.setImage" @clear="result?.clearImage" />
+    <PhotoResult ref="result" />
+    <footer>
+      <a href="https://github.com/kifuan/photo-cutter" class="underline decoration-sky-300 hover:decoration-sky-400 active:decoration-sky-500">GitHub仓库</a>
+    </footer>
+  </div>
 </template>
 
 <style>
 body {
-    padding: 20px;
-}
-
-footer {
-    padding-top: 50px;
+    padding: 3rem;
 }
 </style>

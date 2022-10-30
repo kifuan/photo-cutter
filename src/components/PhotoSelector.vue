@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useFileSystemAccess } from '@vueuse/core'
 import { strategies, useStrategyStore } from '../stores/strategy'
+import Button from './Button.vue'
 
 const emits = defineEmits<{
   (e: 'select', image: HTMLImageElement): void
@@ -17,7 +18,7 @@ function loadImage(path: string): Promise<HTMLImageElement> {
   return new Promise(resolve => image.onload = () => resolve(image))
 }
 
-async function handleGetImage() {
+async function handleSelectImage() {
   const res = useFileSystemAccess({
     dataType: 'Blob',
     types: [{
@@ -35,11 +36,13 @@ async function handleGetImage() {
 </script>
 
 <template>
-  <h1>参数选择</h1>
-  <div class="container">
-    <div>
-      <label>模式: </label>
-      <select v-model="strategyStore.name" @change="scale = 0; emits('clear')">
+  <div class="space-y-4">
+    <h1 class="text-3xl">
+      参数选择
+    </h1>
+    <div class="space-y-2 flex flex-col">
+      <span class="font-medium text-slate-500">模式</span>
+      <select v-model="strategyStore.name" class="px-2 py-1 shadow w-48 outline-none border-2 rounded border-indigo-400 hover:border-indigo-500 active:border-indigo-600" @change="scale = 0; emits('clear')">
         <option
           v-for="[name, strategy] in Object.entries(strategies)"
           :key="name"
@@ -49,21 +52,16 @@ async function handleGetImage() {
         </option>
       </select>
     </div>
-    <div>
-      <label>图片: </label>
-      <button @click="handleGetImage">
+
+    <div class="space-y-2 flex flex-col">
+      <span class="font-medium text-slate-500">图片</span>
+      <Button class="w-24" @click="handleSelectImage">
         选择图片
-      </button>
+      </Button>
     </div>
-    <div>
-      <label>实际宽高比: </label>
-      <span>{{ scale.toFixed(2) }}</span>
+    <div class="space-y-2 flex flex-col">
+      <span class="font-medium text-slate-500">实际宽高比</span>
+      <span class="font-medium text-slate-900">{{ scale.toFixed(2) }}</span>
     </div>
   </div>
 </template>
-
-<style scoped>
-.container > * {
-    margin-bottom: 20px;
-}
-</style>

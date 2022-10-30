@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import type { CalculatedStrategyData, StrategyStep } from '../stores/strategy'
+import Button from './Button.vue'
 
 const {
   step: { size, offset: [offsetX, offsetY], label },
@@ -33,9 +34,9 @@ onMounted(() => {
   <div class="fragment">
     <p>{{ label }}</p>
     <canvas ref="canvas" />
-    <button @click="handleDownload()">
+    <Button @click="handleDownload()">
       下载
-    </button>
+    </Button>
   </div>
 </template>
 

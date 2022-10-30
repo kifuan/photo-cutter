@@ -39,24 +39,21 @@ defineExpose<{ setImage(image: HTMLImageElement): void; clearImage(): void }>({
 </script>
 
 <template>
-  <h1>处理结果</h1>
-  <div v-if="image !== undefined" class="canvases">
-    <PhotoFragment
-      v-for="(step, index) in strategy.steps"
-      :key="index"
-      :calculated-data="calculatedData"
-      :step="step"
-      :image="image"
-    />
-  </div>
-  <div v-else>
-    暂未数据
+  <div class="space-y-4">
+    <h1 class="text-3xl">
+      处理结果
+    </h1>
+    <div v-if="image !== undefined" class="canvases">
+      <PhotoFragment
+        v-for="(step, index) in strategy.steps"
+        :key="index"
+        :calculated-data="calculatedData"
+        :step="step"
+        :image="image"
+      />
+    </div>
+    <div v-else class="text-slate-500 font-medium">
+      暂未数据
+    </div>
   </div>
 </template>
-
-<style scoped>
-.canvases {
-    display: flex;
-    flex-direction: column;
-}
-</style>
