@@ -53,7 +53,7 @@ defineExpose<{ setImage(image: HTMLImageElement): void; clearImage(): void }>({
       />
     </div>
     <div v-else class="text-slate-500 font-medium">
-      暂未数据
+      暂无数据
     </div>
   </div>
 </template>
