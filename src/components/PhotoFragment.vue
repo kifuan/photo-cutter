@@ -3,14 +3,13 @@ import { storeToRefs } from 'pinia'
 import { ref, watch } from 'vue'
 
 import { useImageStore } from '../stores/image'
-import type { StrategyStep } from '../stores/strategy'
+import { useStrategyStore } from '../stores/strategy'
 import Button from './Button.vue'
 
-const {
-  step: { size, offset: [offsetX, offsetY] },
-} = defineProps<{ step: StrategyStep }>()
+const { index } = defineProps<{ index: number }>()
 
 const { image, calculatedData } = storeToRefs(useImageStore())
+const { strategy } = storeToRefs(useStrategyStore())
 
 const canvas = ref<HTMLCanvasElement>()
 
@@ -26,6 +25,7 @@ watch(image, (image) => {
     return
 
   const { unit, cutOffset: [cutOffsetX, cutOffsetY] } = calculatedData.value
+  const { size, offset: [offsetX, offsetY] } = strategy.value.steps[index]
   const el = canvas.value!
   const ctx = el.getContext('2d')!
   el.width = el.height = size * unit
@@ -35,7 +35,7 @@ watch(image, (image) => {
 
 <template>
   <div v-show="image !== undefined" class="flex flex-col space-y-4">
-    <p>{{ step.label }}</p>
+    <p>{{ strategy.steps[index].label }}</p>
     <canvas ref="canvas" />
     <Button @click="handleDownload">
       下载

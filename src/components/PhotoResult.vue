@@ -16,7 +16,7 @@ const { image } = storeToRefs(useImageStore())
     <PhotoFragment
       v-for="(step, index) in strategy.steps"
       :key="step.label + index"
-      :step="step"
+      :index="index"
     />
     <div v-show="image === undefined" class="text-slate-500 font-medium">
       暂无数据
