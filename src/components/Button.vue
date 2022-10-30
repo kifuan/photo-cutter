@@ -5,7 +5,7 @@ const emits = defineEmits<{
 </script>
 
 <template>
-  <button class="px-2 py-1 shadow rounded outline-none border-2 border-indigo-400 hover:border-indigo-500 active:border-indigo-600" @click="emits('click')">
+  <button class="px-2 py-1 shadow transition duration-300 rounded outline-none border-2 border-indigo-400 hover:bg-indigo-500 hover:text-white" @click="emits('click')">
     <slot />
   </button>
 </template>

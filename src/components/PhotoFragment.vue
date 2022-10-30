@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="fragment">
+  <div class="flex flex-col space-y-4">
     <p>{{ label }}</p>
     <canvas ref="canvas" />
     <Button @click="handleDownload()">
@@ -39,14 +39,3 @@ onMounted(() => {
     </Button>
   </div>
 </template>
-
-<style scoped>
-.fragment {
-    display: flex;
-    flex-direction: column;
-}
-
-.fragment > * {
-    margin-bottom: 15px;
-}
-</style>

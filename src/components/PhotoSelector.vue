@@ -34,10 +34,15 @@ async function handleImage() {
     </h1>
     <div class="space-y-2 flex flex-col">
       <span class="font-medium text-slate-500">模式</span>
-      <select v-model="strategyStore.name" class="px-2 py-1 shadow w-72 outline-none border-2 rounded border-indigo-400 hover:border-indigo-500 active:border-indigo-600" @change="scale = 0; emits('clear')">
+      <select
+        v-model="strategyStore.name"
+        class="px-2 py-1 w-72 transition duration-300 border-2 outline-none border-indigo-400 hover:bg-indigo-500 hover:text-white rounded"
+        @change="scale = 0; emits('clear')"
+      >
         <option
           v-for="[name, strategy] in Object.entries(strategies)"
           :key="name"
+          class="bg-white text-black"
           :value="name"
         >
           {{ strategy.label }} 宽高比{{ strategy.scale.toFixed(2) }}
