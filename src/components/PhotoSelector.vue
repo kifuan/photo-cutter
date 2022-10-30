@@ -17,15 +17,21 @@ function loadImage(path: string): Promise<HTMLImageElement> {
 }
 
 async function handleImage() {
-  const file = uploadEl.value!.files![0]
-  const image = await loadImage(URL.createObjectURL(file))
+  const files = uploadEl.value!.files
+  if (!files || files.length === 0)
+    return
+
+  const image = await loadImage(URL.createObjectURL(files[0]))
   scale.value = image.width / image.height
   setImage(image)
+
+  // Clear the file list.
+  uploadEl.value!.value = ''
 }
 </script>
 
 <template>
-  <input ref="uploadEl" type="file" accept="image/*" class="hidden" @change="handleImage">
+  <input ref="uploadEl" type="file" accept="image/*" class="hidden" @blur="handleImage" @change="handleImage">
   <div class="space-y-4">
     <h1 class="text-3xl">
       参数选择
