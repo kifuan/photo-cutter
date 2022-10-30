@@ -5,7 +5,7 @@
         图片切割器
       </h1>
 
-      <span class="text-xl pt-2">v1.17.2</span>
+      <span class="text-xl pt-2">v1.17.3</span>
 
       <a class="hidden md:block" href="https://github.com/kifuan/photo-cutter">
         <img class="pt-3" src="https://img.shields.io/github/stars/kifuan/photo-cutter?style=social" alt="GitHub">
