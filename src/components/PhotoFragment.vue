@@ -13,6 +13,10 @@ const {
   image: HTMLImageElement
 }>()
 
+// Here I must get the value in onMounted.
+// Because the property isn't initialized when rendering.
+const labelRef = ref('')
+
 const canvas = ref<HTMLCanvasElement>()
 
 function handleDownload() {
@@ -23,6 +27,7 @@ function handleDownload() {
 }
 
 onMounted(() => {
+  labelRef.value = label
   const el = canvas.value!
   const ctx = el.getContext('2d')!
   el.width = el.height = size * unit
@@ -32,7 +37,7 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col space-y-4">
-    <p>{{ label }}</p>
+    <p>{{ labelRef }}</p>
     <canvas ref="canvas" />
     <Button @click="handleDownload">
       下载
