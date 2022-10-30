@@ -8,7 +8,7 @@ const emit = defineEmits<{
   (e: 'clear'): void
 }>()
 
-const strategyStore = useStrategyStore()
+const store = useStrategyStore()
 const scale = ref<number>(0)
 const uploadEl = ref<HTMLInputElement>()
 
@@ -35,7 +35,7 @@ async function handleImage() {
     <div class="space-y-2 flex flex-col">
       <span class="font-medium text-slate-500">模式</span>
       <select
-        v-model="strategyStore.name"
+        v-model="store.strategyName"
         class="px-2 py-1 w-72 transition duration-300 border-2 outline-none border-indigo-400 hover:bg-indigo-500 hover:text-white rounded"
         @change="scale = 0; emit('clear')"
       >

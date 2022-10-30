@@ -155,17 +155,17 @@ export const strategies: Readonly<Record<string, Strategy>> = {
 
 export const useStrategyStore = defineStore('strategy', () => {
   const strategy = ref(strategies.qq3x3)
-  const strategyName = ref('qq3x3')
+  const name = ref('qq3x3')
 
-  const name = computed({
-    get: () => strategyName.value,
-    set: (name) => {
-      if (!Reflect.has(strategies, name))
-        throw new TypeError(`unknown strategy: ${name}`)
-      strategyName.value = name
-      strategy.value = strategies[name]
+  const strategyName = computed({
+    get: () => name.value,
+    set: (value) => {
+      if (!Reflect.has(strategies, value))
+        throw new TypeError(`unknown strategy: ${value}`)
+      name.value = value
+      strategy.value = strategies[value]
     },
   })
 
-  return { strategy: readonly(strategy), name }
+  return { strategy: readonly(strategy), strategyName }
 })
