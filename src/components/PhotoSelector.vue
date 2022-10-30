@@ -42,7 +42,7 @@ async function handleSelectImage() {
     </h1>
     <div class="space-y-2 flex flex-col">
       <span class="font-medium text-slate-500">模式</span>
-      <select v-model="strategyStore.name" class="px-2 py-1 shadow w-48 outline-none border-2 rounded border-indigo-400 hover:border-indigo-500 active:border-indigo-600" @change="scale = 0; emits('clear')">
+      <select v-model="strategyStore.name" class="px-2 py-1 shadow w-72 outline-none border-2 rounded border-indigo-400 hover:border-indigo-500 active:border-indigo-600" @change="scale = 0; emits('clear')">
         <option
           v-for="[name, strategy] in Object.entries(strategies)"
           :key="name"
