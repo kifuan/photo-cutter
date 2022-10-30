@@ -14,6 +14,11 @@ export interface Strategy {
   steps: StrategyStep[]
 }
 
+export interface CalculatedStrategyData {
+  unit: number
+  cutOffset: [number, number]
+}
+
 export const strategies: Record<string, Strategy> = {
   qq3x3: {
     label: 'QQ个人资料图片3x3',
