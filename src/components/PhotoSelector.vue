@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useFileSystemAccess } from '@vueuse/core'
-import { storeToRefs } from 'pinia'
 import { strategies, useStrategyStore } from '../stores/strategy'
-import { useImageStore } from '../stores/image'
 
-const imageStore = useImageStore()
+const emits = defineEmits<{
+  (e: 'select', image: HTMLImageElement): void
+  (e: 'clear'): void
+}>()
+
 const strategyStore = useStrategyStore()
 const scale = ref<number>(0)
-
-function handleSelect() {
-  scale.value = 0
-  imageStore.image = undefined
-}
 
 function loadImage(path: string): Promise<HTMLImageElement> {
   const image = new Image()
@@ -33,7 +30,7 @@ async function handleGetImage() {
   await res.open()
   const image = await loadImage(URL.createObjectURL(res.data.value!))
   scale.value = image.width / image.height
-  imageStore.image = image
+  emits('select', image)
 }
 </script>
 
@@ -42,7 +39,7 @@ async function handleGetImage() {
   <div class="container">
     <div>
       <label>模式: </label>
-      <select v-model="strategyStore.name" @change="handleSelect">
+      <select v-model="strategyStore.name" @change="scale = 0; emits('clear')">
         <option
           v-for="[name, strategy] in Object.entries(strategies)"
           :key="name"
