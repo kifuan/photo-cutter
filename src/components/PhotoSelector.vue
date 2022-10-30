@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useImageStore } from '../stores/image'
 import { strategies, useStrategyStore } from '../stores/strategy'
 import Button from './Button.vue'
 
-const emit = defineEmits<{
-  (e: 'select', image: HTMLImageElement): void
-  (e: 'clear'): void
-}>()
+const { setImage, clearImage } = useImageStore()
 
 const store = useStrategyStore()
 const scale = ref<number>(0)
@@ -22,7 +20,7 @@ async function handleImage() {
   const file = uploadEl.value!.files![0]
   const image = await loadImage(URL.createObjectURL(file))
   scale.value = image.width / image.height
-  emit('select', image)
+  setImage(image)
 }
 </script>
 
@@ -37,7 +35,7 @@ async function handleImage() {
       <select
         v-model="store.strategyName"
         class="px-2 py-1 w-72 transition duration-300 border-2 outline-none border-indigo-400 hover:bg-indigo-500 hover:text-white rounded"
-        @change="scale = 0; emit('clear')"
+        @change="scale = 0; clearImage()"
       >
         <option
           v-for="[name, strategy] in Object.entries(strategies)"

@@ -1,21 +1,16 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import type { CalculatedStrategyData, StrategyStep } from '../stores/strategy'
+import { storeToRefs } from 'pinia'
+import { ref, watch } from 'vue'
+
+import { useImageStore } from '../stores/image'
+import type { StrategyStep } from '../stores/strategy'
 import Button from './Button.vue'
 
 const {
-  step: { size, offset: [offsetX, offsetY], label },
-  calculatedData: { unit, cutOffset: [cutOffsetX, cutOffsetY] },
-  image,
-} = defineProps<{
-  step: StrategyStep
-  calculatedData: CalculatedStrategyData
-  image: HTMLImageElement
-}>()
+  step: { size, offset: [offsetX, offsetY] },
+} = defineProps<{ step: StrategyStep }>()
 
-// Here I must get the value in onMounted.
-// Because the property isn't initialized when rendering.
-const labelRef = ref('')
+const { image, calculatedData } = storeToRefs(useImageStore())
 
 const canvas = ref<HTMLCanvasElement>()
 
@@ -26,8 +21,11 @@ function handleDownload() {
   a.click()
 }
 
-onMounted(() => {
-  labelRef.value = label
+watch(image, (image) => {
+  if (image === undefined)
+    return
+
+  const { unit, cutOffset: [cutOffsetX, cutOffsetY] } = calculatedData.value
   const el = canvas.value!
   const ctx = el.getContext('2d')!
   el.width = el.height = size * unit
@@ -36,8 +34,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col space-y-4">
-    <p>{{ labelRef }}</p>
+  <div v-show="image !== undefined" class="flex flex-col space-y-4">
+    <p>{{ step.label }}</p>
     <canvas ref="canvas" />
     <Button @click="handleDownload">
       下载
