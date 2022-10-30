@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import IntroHeader from './components/IntroHeader.vue'
 import PhotoSelector from './components/PhotoSelector.vue'
 import PhotoResult from './components/PhotoResult.vue'
