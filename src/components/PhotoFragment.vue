@@ -4,11 +4,11 @@ import type { CalculatedStrategyData, StrategyStep } from '../stores/strategy'
 
 const {
   step: { size, offset: [offsetX, offsetY], label },
-  data: { unit, cutOffset: [cutOffsetX, cutOffsetY] },
+  calculatedData: { unit, cutOffset: [cutOffsetX, cutOffsetY] },
   image,
 } = defineProps<{
   step: StrategyStep
-  data: CalculatedStrategyData
+  calculatedData: CalculatedStrategyData
   image: HTMLImageElement
 }>()
 

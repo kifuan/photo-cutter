@@ -9,7 +9,7 @@ import PhotoFragment from './PhotoFragment.vue'
 const { strategy } = storeToRefs(useStrategyStore())
 const image = ref<HTMLImageElement>()
 
-const data = computed<CalculatedStrategyData>(() => {
+const calculatedData = computed<CalculatedStrategyData>(() => {
   const img = image.value
   const st = strategy.value
   if (img === undefined || st === undefined)
@@ -33,9 +33,7 @@ const data = computed<CalculatedStrategyData>(() => {
 })
 
 defineExpose<{ setImage(image: HTMLImageElement): void; clearImage(): void }>({
-  setImage: (img) => {
-    image.value = img
-  },
+  setImage: img => image.value = img,
   clearImage: () => image.value = undefined,
 })
 </script>
@@ -43,7 +41,13 @@ defineExpose<{ setImage(image: HTMLImageElement): void; clearImage(): void }>({
 <template>
   <h1>处理结果</h1>
   <div v-if="image !== undefined" class="canvases">
-    <PhotoFragment v-for="(step, index) in strategy.steps" :key="index" :data="data" :step="step" :image="image" />
+    <PhotoFragment
+      v-for="(step, index) in strategy.steps"
+      :key="index"
+      :calculated-data="calculatedData"
+      :step="step"
+      :image="image"
+    />
   </div>
   <div v-else>
     暂未数据
