@@ -10,7 +10,6 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@vueuse/core": "^9.4.0",
     "pinia": "^2.0.17",
     "vue": "^3.2.37"
   },

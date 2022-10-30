@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useFileSystemAccess } from '@vueuse/core'
 import { strategies, useStrategyStore } from '../stores/strategy'
 import Button from './Button.vue'
 
@@ -11,6 +10,7 @@ const emits = defineEmits<{
 
 const strategyStore = useStrategyStore()
 const scale = ref<number>(0)
+const uploadEl = ref<HTMLInputElement>()
 
 function loadImage(path: string): Promise<HTMLImageElement> {
   const image = new Image()
@@ -18,24 +18,16 @@ function loadImage(path: string): Promise<HTMLImageElement> {
   return new Promise(resolve => image.onload = () => resolve(image))
 }
 
-async function handleSelectImage() {
-  const res = useFileSystemAccess({
-    dataType: 'Blob',
-    types: [{
-      description: 'Images',
-      accept: {
-        'image/*': [],
-      },
-    }],
-  })
-  await res.open()
-  const image = await loadImage(URL.createObjectURL(res.data.value!))
+async function handleImage() {
+  const file = uploadEl.value!.files![0]
+  const image = await loadImage(URL.createObjectURL(file))
   scale.value = image.width / image.height
   emits('select', image)
 }
 </script>
 
 <template>
+  <input ref="uploadEl" type="file" accept="image/*" class="hidden" @change="handleImage">
   <div class="space-y-4">
     <h1 class="text-3xl">
       参数选择
@@ -55,7 +47,7 @@ async function handleSelectImage() {
 
     <div class="space-y-2 flex flex-col">
       <span class="font-medium text-slate-500">图片</span>
-      <Button class="w-24" @click="handleSelectImage">
+      <Button class="w-24" @click="uploadEl!.click()">
         选择图片
       </Button>
     </div>
