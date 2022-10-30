@@ -1,31 +1,29 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
-import { computed, watch } from 'vue'
+import { watch } from 'vue'
 import { useImageStore } from '../stores/image'
-import { strategies, Strategy, useStrategyStore } from '../stores/strategy'
+import type { Strategy } from '../stores/strategy'
+import { useStrategyStore } from '../stores/strategy'
 
 const imageStore = useImageStore()
-const strategyStore = useStrategyStore()
-const strategy = computed(() => {
-  return strategies[strategyStore.strategy]
-})
+const { strategy } = storeToRefs(useStrategyStore())
 const canvases = [] as HTMLCanvasElement[]
 
-function calcRegularData(image: HTMLImageElement, strategy: Strategy) : { unit: number, cutOffset: [ number, number ] } {
+function calcRegularData(image: HTMLImageElement, strategy: Strategy): { unit: number; cutOffset: [ number, number ] } {
   const scale = image.width / image.height
   if (scale > strategy.scale) {
     // The width is more than expected, use height * scale to calculate ideal width.
     const idealWidth = image.height * strategy.scale
     const unit = idealWidth * strategy.unit
     const cutOffsetX = (image.width - idealWidth) / 2
-    return { unit, cutOffset: [ cutOffsetX, 0 ] }
+    return { unit, cutOffset: [cutOffsetX, 0] }
   }
   else {
     // The height is more than expected, use width / scale to calculate ideal height.
     const idealHeight = image.width / strategy.scale
     const unit = image.width * strategy.unit
     const cutOffsetY = (image.height - idealHeight) / 2
-    return { unit, cutOffset: [ 0, cutOffsetY ] }
+    return { unit, cutOffset: [0, cutOffsetY] }
   }
 }
 
@@ -33,14 +31,14 @@ watch(storeToRefs(imageStore).image, (image) => {
   if (image === undefined)
     return
 
-  const { unit, cutOffset: [ cutOffsetX, cutOffsetY ] } = calcRegularData(image, strategy.value)
-  for (let i = 0; i < canvases.length; i++) {
-    const { size, offset: [offsetX, offsetY] } = strategy.value.steps[i]
-    const canvas = canvases[i]
+  const { unit, cutOffset: [cutOffsetX, cutOffsetY] } = calcRegularData(image, strategy.value)
+  strategy.value.steps.forEach((step, index) => {
+    const { size, offset: [offsetX, offsetY] } = step
+    const canvas = canvases[index]
     const ctx = canvas.getContext('2d')!
     canvas.width = canvas.height = size * unit
     ctx.drawImage(image, unit * offsetX + cutOffsetX, unit * offsetY + cutOffsetY, unit * size, unit * size, 0, 0, unit * size, unit * size)
-  }
+  })
 })
 
 function handleDownload(canvasIndex: number) {

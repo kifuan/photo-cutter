@@ -1,37 +1,37 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useFileSystemAccess } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 import { strategies, useStrategyStore } from '../stores/strategy'
 import { useImageStore } from '../stores/image'
 
 const imageStore = useImageStore()
 const strategyStore = useStrategyStore()
-const uploader = ref<HTMLInputElement | undefined>()
 const scale = ref<number>(0)
 
 function handleSelect() {
-  uploader.value!.value = ''
   scale.value = 0
   imageStore.image = undefined
 }
 
-function readImage(file: File): Promise<HTMLImageElement> {
-  return new Promise((resolve) => {
-    const reader = new FileReader()
-    reader.onload = () => {
-      const image = new Image()
-      image.src = reader.result as string
-      image.onload = () => resolve(image)
-    }
-    reader.readAsDataURL(file)
-  })
+function loadImage(path: string): Promise<HTMLImageElement> {
+  const image = new Image()
+  image.src = path
+  return new Promise(resolve => image.onload = () => resolve(image))
 }
 
-async function handleImage() {
-  const files = uploader.value!.files
-  if (files === null || files.length !== 1)
-    return
-
-  const image = await readImage(files[0])
+async function handleGetImage() {
+  const res = useFileSystemAccess({
+    dataType: 'Blob',
+    types: [{
+      description: 'Images',
+      accept: {
+        'image/*': [],
+      },
+    }],
+  })
+  await res.open()
+  const image = await loadImage(URL.createObjectURL(res.data.value!))
   scale.value = image.width / image.height
   imageStore.image = image
 }
@@ -42,7 +42,7 @@ async function handleImage() {
   <div class="container">
     <div>
       <label>模式: </label>
-      <select v-model="strategyStore.strategy" @change="handleSelect">
+      <select v-model="strategyStore.name" @change="handleSelect">
         <option
           v-for="[name, strategy] in Object.entries(strategies)"
           :key="name"
@@ -54,7 +54,7 @@ async function handleImage() {
     </div>
     <div>
       <label>图片: </label>
-      <button @click="uploader?.click()">
+      <button @click="handleGetImage">
         选择图片
       </button>
     </div>
@@ -63,15 +63,9 @@ async function handleImage() {
       <span>{{ scale.toFixed(2) }}</span>
     </div>
   </div>
-  <!-- Make no effects on this hidden element -->
-  <input ref="uploader" type="file" accept="image/*" @change="handleImage">
 </template>
 
 <style scoped>
-input[type="file"] {
-    display: none;
-}
-
 .container > * {
     margin-bottom: 20px;
 }

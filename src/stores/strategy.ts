@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 export interface StrategyStep {
   label: string
@@ -149,6 +149,18 @@ export const strategies: Record<string, Strategy> = {
 }
 
 export const useStrategyStore = defineStore('strategy', () => {
-  const strategy = ref('qq3x3')
-  return { strategy }
+  const strategy = ref(strategies.qq3x3)
+  const strategyName = ref('qq3x3')
+
+  const name = computed({
+    get: () => strategyName.value,
+    set: (name) => {
+      if (!Reflect.has(strategies, name))
+        throw new TypeError(`unknown strategy: ${name}`)
+      strategyName.value = name
+      strategy.value = strategies[name]
+    },
+  })
+
+  return { strategy, name }
 })
