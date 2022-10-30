@@ -8,12 +8,10 @@ import { useStrategyStore } from '../stores/strategy'
 import Button from './Button.vue'
 
 const { index } = defineProps<{ index: number }>()
-
 const { image, calculatedData } = storeToRefs(useImageStore())
 const { strategy } = storeToRefs(useStrategyStore())
 
 const canvas = ref<HTMLCanvasElement>()
-
 const step = computed(() => strategy.value.steps[index])
 
 function handleDownload() {
