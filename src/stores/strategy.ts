@@ -1,25 +1,25 @@
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, readonly, ref } from 'vue'
 
-export interface StrategyStep {
+export type StrategyStep = Readonly<{
   label: string
   size: number
-  offset: [number, number]
-}
+  offset: readonly [number, number]
+}>
 
-export interface Strategy {
+export type Strategy = Readonly<{
   label: string
   unit: number
   scale: number
   steps: StrategyStep[]
-}
+}>
 
-export interface CalculatedStrategyData {
+export type CalculatedStrategyData = Readonly<{
   unit: number
   cutOffset: [number, number]
-}
+}>
 
-export const strategies: Record<string, Strategy> = {
+export const strategies: Readonly<Record<string, Strategy>> = {
   qq3x3: {
     label: 'QQ个人资料图片3x3',
     unit: 0.333333,
@@ -167,5 +167,5 @@ export const useStrategyStore = defineStore('strategy', () => {
     },
   })
 
-  return { strategy, name }
+  return { strategy: readonly(strategy), name }
 })

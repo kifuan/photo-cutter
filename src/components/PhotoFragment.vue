@@ -34,7 +34,7 @@ onMounted(() => {
   <div class="flex flex-col space-y-4">
     <p>{{ label }}</p>
     <canvas ref="canvas" />
-    <Button @click="handleDownload()">
+    <Button @click="handleDownload">
       下载
     </Button>
   </div>
