@@ -31,7 +31,7 @@ async function handleImage() {
 </script>
 
 <template>
-  <input ref="uploadEl" type="file" accept="image/*" class="hidden" @blur="handleImage" @change="handleImage">
+  <input ref="uploadEl" type="file" accept="image/*" class="hidden" @change="handleImage">
   <div class="space-y-4">
     <h1 class="text-3xl">
       参数选择
