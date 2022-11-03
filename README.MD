@@ -1,28 +1,28 @@
 # Photo Cutter
 
-[English](./README-EN.MD)
+[中文](./README-ZH.MD)
 
-## 介绍
+## Introduction
 
-可以把一张大图切成几个小图。
+It can cut a large image into smaller pieces.
 
-以前是用原生JS写的，不过逻辑越加越混乱，索性用`Github Actions`来帮我部署`Vue`项目了。
+I had written it in pure JS before, but it ended up with a mess.
 
-## 特性
+So I use `Vue.js` deployed by `GitHub Actions` for now.
 
-1. 多种模式选择，非侵入式添加新模式。
+## Features
 
-   仅通过为`strategies`一个对象添加新的`key-value`来实现新模式的添加。此处无耦合逻辑。
+1. Multiple modes to choose from, and non-intrusive addition of new modes.
 
-2. 自动按照比例截取图片中间部分，不留白。
+   A new cutting mode can be added by simply adding a `key-value` pair for the `strategies` object in `src/stores/strategy.ts`.
 
-   通过我写的一大坨逻辑实现。
+2. Cropping the image proportionally, without leaving any whitespace.
 
-3. 基于`Vue3` + `TS` + `Pinia` + `Tailwind CSS`，只用了一些默认样式。
+3. Based on `Vue3` + `TS` + `Pinia` + `Tailwind CSS`, only default styles were used.
 
-   用来练手挺好的。
+   So it's friendly for beginners.
 
 
-## 使用方法
+## Usage
 
-选好参数直接下载切割后的图片即可。
+Download the fragments of your image after selecting arguments.

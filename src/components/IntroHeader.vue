@@ -27,7 +27,7 @@ const zh = ref(false)
       <template v-else>
         <p>Download the images from top to bottom.</p>
         <p>The extra part of your image will be cropped.</p>
-        <p>Please <span class="text-red-500">do not choose select all images in one go</span> when posting on your app. Maybe the app you use will make them unordered.</p>
+        <p>Please <span class="text-red-500">do not select all images in one go</span> when posting them on your app. They may be unordered as a result.</p>
       </template>
       <p><a href="javascript:void(0)" class="underline decoration-sky-300 hover:decoration-sky-400 active:decoration-sky-500" @click="zh = !zh">{{ zh ? 'English Intro' : '中文说明' }}</a></p>
     </div>
