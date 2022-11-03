@@ -61,7 +61,7 @@ async function handleImage() {
       </Button>
     </div>
     <div class="space-y-2 flex flex-col">
-      <span class="font-medium text-slate-500">Real Aspect Ratio</span>
+      <span class="font-medium text-slate-500">Actual Aspect Ratio</span>
       <span class="font-medium text-slate-900">{{ scale.toFixed(2) }}</span>
     </div>
   </div>
