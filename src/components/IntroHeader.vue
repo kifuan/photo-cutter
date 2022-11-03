@@ -11,7 +11,7 @@ const zh = ref(false)
         Photo Cutter
       </h1>
 
-      <span class="text-xl">v1.18.0</span>
+      <span class="text-xl">v1.19.0</span>
 
       <a class="hidden md:block" href="https://github.com/kifuan/photo-cutter">
         <img src="https://img.shields.io/github/stars/kifuan/photo-cutter?style=social" alt="GitHub">
