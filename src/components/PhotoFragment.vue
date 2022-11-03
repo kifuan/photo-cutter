@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { computed } from '@vue/reactivity'
 import { storeToRefs } from 'pinia'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import { useImageStore } from '../stores/image'
 import { useStrategyStore } from '../stores/strategy'
