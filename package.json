@@ -1,7 +1,7 @@
 {
   "name": "photo-cutter",
   "type": "module",
-  "version": "1.19.0",
+  "version": "1.19.1",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
