@@ -34,10 +34,10 @@ async function handleImage() {
   <input ref="uploadEl" type="file" accept="image/*" class="hidden" @change="handleImage">
   <div class="space-y-4">
     <h1 class="text-3xl">
-      参数选择
+      Arguments
     </h1>
     <div class="space-y-2 flex flex-col">
-      <span class="font-medium text-slate-500">模式</span>
+      <span class="font-medium text-slate-500">Mode</span>
       <select
         v-model="store.strategyName"
         class="px-2 py-1 w-72 transition duration-300 border-2 outline-none border-indigo-400 hover:bg-indigo-500 hover:text-white rounded"
@@ -49,19 +49,19 @@ async function handleImage() {
           class="bg-white text-black"
           :value="name"
         >
-          {{ strategy.label }} 宽高比{{ strategy.scale.toFixed(2) }}
+          {{ strategy.label }}
         </option>
       </select>
     </div>
 
     <div class="space-y-2 flex flex-col">
-      <span class="font-medium text-slate-500">图片</span>
+      <span class="font-medium text-slate-500">Photo</span>
       <Button class="w-24" @click="uploadEl!.click()">
-        选择图片
+        Select
       </Button>
     </div>
     <div class="space-y-2 flex flex-col">
-      <span class="font-medium text-slate-500">实际宽高比</span>
+      <span class="font-medium text-slate-500">Real Aspect Ratio</span>
       <span class="font-medium text-slate-900">{{ scale.toFixed(2) }}</span>
     </div>
   </div>

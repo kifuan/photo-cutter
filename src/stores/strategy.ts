@@ -21,131 +21,131 @@ export type CalculatedStrategyData = Readonly<{
 
 export const strategies: Readonly<Record<string, Strategy>> = {
   qq3x3: {
-    label: 'QQ个人资料图片3x3',
+    label: 'QQ Profile 3x3',
     unit: 0.333333,
     scale: 0.75,
     steps: [
       {
-        label: '左1',
+        label: 'Left 1',
         size: 2,
         offset: [0, 0],
       },
       {
-        label: '右1',
+        label: 'Right 1',
         size: 1,
         offset: [2, 0],
       },
       {
-        label: '右2',
+        label: 'Right 2',
         size: 1,
         offset: [2, 1],
       },
       {
-        label: '左2',
+        label: 'Left 2',
         size: 1,
         offset: [0, 2],
       },
       {
-        label: '中1',
+        label: 'Mid 1',
         size: 1,
         offset: [1, 2],
       },
       {
-        label: '右3',
+        label: 'Right 3',
         size: 1,
         offset: [2, 2],
       },
       {
-        label: '左3',
+        label: 'Left 3',
         size: 1,
         offset: [0, 3],
       },
       {
-        label: '中2',
+        label: 'Mid 2',
         size: 1,
         offset: [1, 3],
       },
       {
-        label: '右4',
+        label: 'Right 4',
         size: 1,
         offset: [2, 3],
       },
     ],
   },
   normal3x3: {
-    label: '普通3x3(九宫格)',
+    label: 'Normal 3x3',
     unit: 0.333333,
     scale: 1,
     steps: [
       {
-        label: '左1',
+        label: 'Left 1',
         size: 1,
         offset: [0, 0],
       },
       {
-        label: '中1',
+        label: 'Mid 1',
         size: 1,
         offset: [1, 0],
       },
       {
-        label: '右1',
+        label: 'Right 1',
         size: 1,
         offset: [2, 0],
       },
       {
-        label: '左2',
+        label: 'Left 2',
         size: 1,
         offset: [0, 1],
       },
       {
-        label: '中2',
+        label: 'Mid 2',
         size: 1,
         offset: [1, 1],
       },
       {
-        label: '右2',
+        label: 'Right 2',
         size: 1,
         offset: [2, 1],
       },
       {
-        label: '左3',
+        label: 'Left 3',
         size: 1,
         offset: [0, 2],
       },
       {
-        label: '中3',
+        label: 'Mid 3',
         size: 1,
         offset: [1, 2],
       },
       {
-        label: '右3',
+        label: 'Right 3',
         size: 1,
         offset: [2, 2],
       },
     ],
   },
   normal2x2: {
-    label: '普通2x2',
+    label: 'Normal 2x2',
     unit: 0.5,
     scale: 1,
     steps: [
       {
-        label: '左1',
+        label: 'Left 1',
         size: 1,
         offset: [0, 0],
       },
       {
-        label: '右1',
+        label: 'Right 1',
         size: 1,
         offset: [1, 0],
       },
       {
-        label: '左2',
+        label: 'Left 2',
         size: 1,
         offset: [0, 1],
       },
       {
-        label: '右2',
+        label: 'Right 2',
         size: 1,
         offset: [1, 1],
       },

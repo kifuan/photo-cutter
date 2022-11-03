@@ -11,7 +11,7 @@ const { image } = storeToRefs(useImageStore())
 <template>
   <div class="space-y-4">
     <h1 class="text-3xl">
-      处理结果
+      Result
     </h1>
     <PhotoFragment
       v-for="(step, index) in strategy.steps"
@@ -19,7 +19,7 @@ const { image } = storeToRefs(useImageStore())
       :index="index"
     />
     <div v-show="image === undefined" class="text-slate-500 font-medium">
-      暂无数据
+      No data yet.
     </div>
   </div>
 </template>

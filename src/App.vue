@@ -10,7 +10,7 @@ import PhotoResult from './components/PhotoResult.vue'
     <PhotoSelector />
     <PhotoResult />
     <footer>
-      <a href="https://github.com/kifuan/photo-cutter" class="underline decoration-sky-300 hover:decoration-sky-400 active:decoration-sky-500">GitHub仓库</a>
+      <a href="https://github.com/kifuan/photo-cutter" class="underline decoration-sky-300 hover:decoration-sky-400 active:decoration-sky-500">GitHub</a>
     </footer>
   </div>
 </template>

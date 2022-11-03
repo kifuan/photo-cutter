@@ -38,7 +38,7 @@ watch(image, (image) => {
     <p>{{ step.label }}</p>
     <canvas ref="canvas" />
     <Button @click="handleDownload">
-      下载
+      Download
     </Button>
   </div>
 </template>
